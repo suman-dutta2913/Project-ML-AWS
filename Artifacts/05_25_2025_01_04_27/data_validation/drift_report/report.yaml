@@ -1,0 +1,30 @@
+attack_detected:
+  drift_status: false
+  p_value: 1.0
+browser_type:
+  drift_status: false
+  p_value: 1.0
+encryption_used:
+  drift_status: false
+  p_value: 0.9999999999992325
+failed_logins:
+  drift_status: false
+  p_value: 0.9459544684833924
+ip_reputation_score:
+  drift_status: false
+  p_value: 0.16577975593765826
+login_attempts:
+  drift_status: false
+  p_value: 0.936066976499936
+network_packet_size:
+  drift_status: false
+  p_value: 0.23644046210272646
+protocol_type:
+  drift_status: false
+  p_value: 0.9624735791575688
+session_duration:
+  drift_status: false
+  p_value: 0.769732121253186
+unusual_time_access:
+  drift_status: false
+  p_value: 0.9993264153879665
