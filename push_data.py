@@ -43,9 +43,9 @@ class NetworkDataExtract():
             raise NetworkSecurityException(e,sys)
 
 if __name__=='__main__':
-    FILE_PATH = "Network_data\phisingData.csv"
-    DATABASE = "SumanDB"
-    Collection="Data"
+    FILE_PATH = "Network_data\preprocessed_dataset.csv"
+    DATABASE = "SumanDB2"
+    Collection="Data2"
     networkobj = NetworkDataExtract()
     records = networkobj.cv_to_json_convertor(file_path=FILE_PATH)
     no_of_records = networkobj.insert_data_to_mongodb(records,DATABASE,Collection)

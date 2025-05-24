@@ -11,5 +11,5 @@ dagshub
 fastapi
 uvicorn
 python-multipart
-
+openpyxl
 -e.
