@@ -22,7 +22,7 @@ import pandas as pd
 
 from networksecurity.utils.main_utils.utils import load_object
 
-from networksecurity.utils.ml_utils.model.estimator import NetworkModel
+from networksecurity.utils.ml_utils.model.estimator import CybersecurityModel
 
 
 client = pymongo.MongoClient(mongo_db_url, tlsCAFile=ca)
@@ -67,7 +67,7 @@ async def predict_route(request: Request,file: UploadFile = File(...)):
         #print(df)
         preprocesor=load_object("final_model/preprocessor.pkl")
         final_model=load_object("final_model/model.pkl")
-        network_model = NetworkModel(preprocessor=preprocesor,model=final_model)
+        network_model = CybersecurityModel(preprocessor=preprocesor,model=final_model)
         print(df.iloc[0])
         y_pred = network_model.predict(df)
         print(y_pred)
