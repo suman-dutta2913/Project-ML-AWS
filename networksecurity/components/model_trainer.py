@@ -22,6 +22,8 @@ from networksecurity.utils.ml_utils.model.estimator import CybersecurityModel
 from networksecurity.utils.main_utils.utils import save_object, load_object, load_numpy_array_data, evaluate_models
 from networksecurity.utils.ml_utils.metric.classification_metric import get_classification_score
 
+import dagshub
+dagshub.init(repo_owner='sumandutta2913', repo_name='Project-ML-AWS', mlflow=True)
 # os.environ["MLFLOW_TRACKING_URI"] = "https://dagshub.com/krishnaik06/networksecurity.mlflow"
 # os.environ["MLFLOW_TRACKING_USERNAME"] = "krishnaik06"
 # os.environ["MLFLOW_TRACKING_PASSWORD"] = "7104284f1bb44ece21e0e2adb4e36a250ae3251f"
@@ -49,37 +51,37 @@ class ModelTrainer:
     def train_model(self, X_train, y_train, X_test, y_test):
         models = {
             "Random Forest": RandomForestClassifier(verbose=1),
-            "Decision Tree": DecisionTreeClassifier(),
-            "Gradient Boosting": GradientBoostingClassifier(verbose=1),
-            "Logistic Regression": LogisticRegression(verbose=1),
-            "AdaBoost": AdaBoostClassifier(),
+            #"Decision Tree": DecisionTreeClassifier(),
+            #"Gradient Boosting": GradientBoostingClassifier(verbose=1),
+            # "Logistic Regression": LogisticRegression(verbose=1),
+            #"AdaBoost": AdaBoostClassifier(),
             "SVM": SVC(probability=True)
         }
 
         params = {
-            "Decision Tree": {
-                'criterion': ['gini', 'entropy', 'log_loss'],
-                'splitter': ['best', 'random'],
-                'max_features': ['sqrt', 'log2']
-            },
+            # "Decision Tree": {
+            #     'criterion': ['gini', 'entropy', 'log_loss'],
+            #     'splitter': ['best', 'random'],
+            #     'max_features': ['sqrt', 'log2']
+            # },
             "Random Forest": {
                 'criterion': ['gini', 'entropy', 'log_loss'],
                 'max_features': ['sqrt', 'log2', None],
                 'n_estimators': [8, 16, 32, 128, 256]
             },
-            "Gradient Boosting": {
-                'loss': ['log_loss', 'exponential'],
-                'learning_rate': [.1, .01, .05, .001],
-                'subsample': [0.6, 0.7, 0.75, 0.85, 0.9],
-                'criterion': ['squared_error', 'friedman_mse'],
-                'max_features': ['auto', 'sqrt', 'log2'],
-                'n_estimators': [8, 16, 32, 64, 128, 256]
-            },
-            "Logistic Regression": {},
-            "AdaBoost": {
-                'learning_rate': [.1, .01, .001],
-                'n_estimators': [8, 16, 32, 64, 128, 256]
-            },
+            # "Gradient Boosting": {
+            #     'loss': ['log_loss', 'exponential'],
+            #     'learning_rate': [.1, .01, .05, .001],
+            #     'subsample': [0.6, 0.7, 0.75, 0.85, 0.9],
+            #     'criterion': ['squared_error', 'friedman_mse'],
+            #     'max_features': ['auto', 'sqrt', 'log2'],
+            #     'n_estimators': [8, 16, 32, 64, 128, 256]
+            # },
+            # #"Logistic Regression": {},
+            # "AdaBoost": {
+            #     'learning_rate': [.1, .01, .001],
+            #     'n_estimators': [8, 16, 32, 64, 128, 256]
+            # },
             "SVM": {
                 'C': [0.1, 1, 10],
                 'kernel': ['linear', 'rbf', 'poly'],
@@ -100,7 +102,7 @@ class ModelTrainer:
 
         y_test_pred = best_model.predict(X_test)
         classification_test_metric = get_classification_score(y_true=y_test, y_pred=y_test_pred)
-        #self.track_mlflow(best_model, classification_test_metric)
+        self.track_mlflow(best_model, classification_test_metric)
 
         preprocessor = load_object(self.data_transformation_artifact.transformed_object_file_path)
         model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
